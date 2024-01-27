@@ -4,6 +4,7 @@ using System.Security.Principal;
 using System.Text;
 using AsaBloggerApi.Src.Models;
 using AsaBloggerApi.Src.Models.DTO;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 #pragma warning disable CS8604
@@ -15,23 +16,22 @@ namespace AsaBloggerApi.Src.Helpers
         public static string GenerateJSONWebToken(UserModel userModel, Config config)
         {
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.JwtSecret));
-    
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(config.JwtSecret);
             var claims = new[] {
-                new Claim(JwtRegisteredClaimNames.Sub, userModel.Username),
-                new Claim(JwtRegisteredClaimNames.Sub, userModel.Password),
+                new Claim("Username", userModel.Username),
+                new Claim("Id", userModel.Id.ToString()),
 
             };
-
-            var token = new JwtSecurityToken(config.Issuer,
-               config.Issuer,
-                claims,
-                expires: DateTime.Now.AddMinutes(config.JwtTime),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddMinutes(config.JwtTime),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
         public static bool ValidateToken(string token, Config config)
         {
@@ -40,23 +40,24 @@ namespace AsaBloggerApi.Src.Helpers
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var validationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuer = true,
-                    ValidateLifetime = true,
+                    ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = config.Issuer,
                     ValidAudience = config.Issuer,
-                
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.JwtSecret))
-                };
 
-                SecurityToken validatedToken;
-                IPrincipal principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config.JwtSecret))
+                };
+                IdentityModelEventSource.ShowPII = true;
+                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+                var jwtToken = (JwtSecurityToken)validatedToken;
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine("====================");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine("====================");
                 return false;
             }
 

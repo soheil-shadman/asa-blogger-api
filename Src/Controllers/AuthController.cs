@@ -21,23 +21,18 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("signup")]
         public async Task<IActionResult> Signup([FromBody] SignupDTO input)
         {
-            try
+
+            if (!input.IsValid())
             {
-
-                if (!input.IsValid())
-                {
-                    return BadRequest(ApiUtils.BadPatameters());
-                }
-                var result = await _service.Signup(input);
-
-                return Ok(ApiUtils.SendResponse(result));
-
+                return BadRequest(ApiUtils.BadPatameters());
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ApiUtils.SendError(error: ex.ToString()));
-            }
+            var result = await _service.Signup(input);
+
+            return Ok(ApiUtils.SendResponse(result));
+
         }
+
+
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO input)

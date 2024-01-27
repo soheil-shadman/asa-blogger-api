@@ -33,9 +33,10 @@ namespace AsaBloggerApi.Src.Infostructure
 
         public async Task<UserModel> SaveUserToken(UserModel userModel)
         {
+
             var query = await _context.Users.Where(d => d.Id.Equals(userModel.Id)).FirstOrDefaultAsync();
             query.Token = userModel.Token;
-
+            query.LastLogin = userModel.LastLogin;
             _context.Update(query);
             await _context.SaveChangesAsync();
             return userModel;

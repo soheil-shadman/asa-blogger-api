@@ -6,7 +6,9 @@ namespace AsaBloggerApi.Src.Domain.Entities
     {
         public int Id { get; set; }
         public string? Content { get; set; }
-        public DateTime PublishedDate { get; set; }
+        public DateTime PublishedDate { get; set; }= DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdateAt { get; set; } = DateTime.Now;
 
         [ForeignKey("User")]
         public int UserId { get; set; }

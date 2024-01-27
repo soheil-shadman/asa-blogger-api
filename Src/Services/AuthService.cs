@@ -36,8 +36,9 @@ namespace AsaBloggerApi.Src.Services
                 Password = input.Password
             };
             var targetUser = await _repository.GetUserByUsernameAndPassword(userModel) ?? throw new Exception("user not found");
-            targetUser.Token=JwtUtils.GenerateJSONWebToken(userModel,Config.GetConfig());
-            targetUser.LastLogin=DateTime.Now;
+            userModel.LastLogin=DateTime.Now;
+            userModel.Id=targetUser.Id;
+            userModel.Token=JwtUtils.GenerateJSONWebToken(userModel,Config.GetConfig());
             targetUser = await _repository.SaveUserToken(userModel);
             return targetUser;
         }

@@ -34,7 +34,8 @@ namespace AsaBloggerApi.Src.Middlewares
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 var json = JsonSerializer.Serialize(new ApiResponse
                 {
-                    Errors = "internal server error",
+                    Errors =  ex.Message,
+                    Status=(int)HttpStatusCode.InternalServerError
                 });
                 await context.Response.WriteAsync(json);
             }

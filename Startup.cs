@@ -20,7 +20,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
 
-
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddDbContext<EFDataContext>(o => o.UseNpgsql(configRoot.GetConnectionString("BLOG_DB")));
@@ -32,9 +32,8 @@ public class Startup
 
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
-                            ValidateIssuer = true,
+                            ValidateIssuer = false,
                             ValidateAudience = false,
-                            ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
                             ValidIssuer = configRoot["Jwt:Issuer"],
                             ValidAudience = configRoot["Jwt:Issuer"],
