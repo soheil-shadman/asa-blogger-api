@@ -1,12 +1,12 @@
 using System.Text;
-using AsaBloggerApi;
+using AsaBloggerApi.Src.Infostructure;
+using AsaBloggerApi.Src.Middlewares;
 using AsaBloggerApi.Src.Repositories;
 using AsaBloggerApi.Src.Services;
+using AsaBloggerApi.Src.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-#pragma warning disable CS8604
-
 public class Startup
 {
     public IConfiguration configRoot
@@ -55,6 +55,7 @@ public class Startup
         }
         app.UseHttpsRedirection();
         app.UseAuthorization();
+        app.UseMiddleware<CatchMiddleware>();
         app.MapControllers();
         app.MapGet("/", () => "Asa blogger!");
 

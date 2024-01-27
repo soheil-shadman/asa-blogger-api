@@ -1,10 +1,10 @@
-using AsaBloggerApi.Src.Helpers;
+using AsaBloggerApi.Src.Domain.Entities;
 using AsaBloggerApi.Src.Models;
+using AsaBloggerApi.Src.Repositories;
 using Microsoft.EntityFrameworkCore;
-#pragma warning disable CS8602
-namespace AsaBloggerApi.Src.Repositories
+namespace AsaBloggerApi.Src.Infostructure
 {
-    public sealed class Repository : IRepository
+    public class Repository : IRepository
     {
         private readonly EFDataContext _context;
         public Repository(EFDataContext context)
@@ -14,7 +14,7 @@ namespace AsaBloggerApi.Src.Repositories
 
         public async Task<UserModel> CreateUser(UserModel userModel)
         {
-            var userEntity = new User()
+            var userEntity = new UserEntity()
             {
                 Email = userModel.Email,
                 Password = userModel.Password,

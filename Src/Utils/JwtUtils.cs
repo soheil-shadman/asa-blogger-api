@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 #pragma warning disable CS8604
 namespace AsaBloggerApi.Src.Helpers
 {
-    public sealed class JwtUtils
+    public class JwtUtils
     {
 
         public static string GenerateJSONWebToken(UserModel userModel, Config config)

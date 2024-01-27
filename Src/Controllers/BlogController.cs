@@ -1,5 +1,5 @@
-using AsaBloggerApi.Src.Models.DTO;
-using AsaBloggerApi.Src.Services;
+
+using AsaBloggerApi.Src.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AsaBloggerApi.Src.Controllers
@@ -7,7 +7,7 @@ namespace AsaBloggerApi.Src.Controllers
 
     [ApiController]
     [Route("api/blog")]
-    public sealed class BlogController : ControllerBase
+    public class BlogController : ControllerBase
     {
         private readonly IBlogService _service;
         public BlogController(IBlogService service)

@@ -2,10 +2,10 @@ using AsaBloggerApi.Src.Helpers;
 using AsaBloggerApi.Src.Models;
 using AsaBloggerApi.Src.Models.DTO;
 using AsaBloggerApi.Src.Repositories;
-#pragma warning disable CS8604
+using AsaBloggerApi.Src.Services.Interfaces;
 namespace AsaBloggerApi.Src.Services
 {
-    public sealed class AuthService : IAuthService
+    public class AuthService : IAuthService
     {
           private readonly IRepository _repository;
 
