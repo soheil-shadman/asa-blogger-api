@@ -38,3 +38,14 @@ bld/
 msbuild.log
 msbuild.err
 msbuild.wrn
+.obj/
+obj/Debug/net8.0/AsaBloggerApi.GeneratedMSBuildEditorConfig.editorconfig
+obj/Debug/net8.0/AsaBloggerApi.csproj.AssemblyReference.cache
+obj/Debug/net8.0/AsaBloggerApi.assets.cache
+obj/Debug/net8.0/AsaBloggerApi.AssemblyInfoInputs.cache
+obj/Debug/net8.0/AsaBloggerApi.AssemblyInfo.cs
+obj/project.nuget.cache
+obj/project.assets.json
+obj/AsaBloggerApi.csproj.nuget.g.targets
+obj/AsaBloggerApi.csproj.nuget.g.props
+obj/AsaBloggerApi.csproj.nuget.dgspec.json
