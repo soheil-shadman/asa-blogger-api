@@ -1,8 +1,8 @@
 using AsaBloggerApi.Src.Models;
 
-namespace AsaBloggerApi.Src.Helpers
+namespace AsaBloggerApi.Src.Utils
 {
-    public class ApiHelper
+    public class ApiUtils
     {
         public static ApiResponse SendResponse(Object? data)
         {

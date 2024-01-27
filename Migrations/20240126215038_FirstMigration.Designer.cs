@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AsaBloggerApi.Migrations
 {
-    [DbContext(typeof(EF_DataContext))]
+    [DbContext(typeof(EFDataContext))]
     [Migration("20240126215038_FirstMigration")]
     partial class FirstMigration
     {

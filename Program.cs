@@ -1,27 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-
+using AsaBloggerApi;
 var builder = WebApplication.CreateBuilder(args);
-
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<EF_DataContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("BLOG_DB")));
-builder.Services.AddHttpLogging(o => { });
-builder.Services.AddControllers();
-
+Config.InitConfig(builder.Configuration["Jwt:Key"], builder.Configuration["Jwt:Issuer"]);
+var startup = new Startup(builder.Configuration);
+startup.ConfigureServices(builder.Services);
 var app = builder.Build();
-app.UseHttpLogging();
-
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-app.UseAuthorization();
-app.MapControllers();
-app.MapGet("/", () => "Asa blogger!");
-
+startup.Configure(app, builder.Environment);
 // app.MapGet("/weatherforecast", () =>
 // {
 //     var forecast =  Enumerable.Range(1, 5).Select(index =>
@@ -37,5 +20,4 @@ app.MapGet("/", () => "Asa blogger!");
 // .WithName("GetWeatherForecast")
 // .WithOpenApi();
 
-app.Run();
 

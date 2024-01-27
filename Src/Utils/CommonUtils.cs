@@ -15,5 +15,7 @@ namespace AsaBloggerApi.Src.Utils
 
             return allStringPropertyValues.All(value => !string.IsNullOrEmpty(value));
         }
+        
     }
+
 }

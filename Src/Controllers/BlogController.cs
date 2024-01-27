@@ -1,16 +1,19 @@
-using AsaBloggerApi.Src.Logics;
 using AsaBloggerApi.Src.Models.DTO;
+using AsaBloggerApi.Src.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AsaBloggerApi.Src.Controllers{
+namespace AsaBloggerApi.Src.Controllers
+{
 
-[ApiController]
-[Route("api/blog")]
-    public sealed class BlogController : ControllerBase{
-        private readonly BlogLogic _logic ;
-        public BlogController(){
-          
-            _logic = new BlogLogic();
+    [ApiController]
+    [Route("api/blog")]
+    public sealed class BlogController : ControllerBase
+    {
+        private readonly IBlogService _service;
+        public BlogController(IBlogService service)
+        {
+
+            _service = service;
         }
 
         [HttpGet]
@@ -19,7 +22,7 @@ namespace AsaBloggerApi.Src.Controllers{
         {
             try
             {
-                  Console.WriteLine("annn");
+
                 //   [FromBody] SignupDTO input
                 return Ok("Ola");
 

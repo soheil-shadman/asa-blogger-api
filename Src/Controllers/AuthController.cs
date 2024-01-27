@@ -1,19 +1,20 @@
-using AsaBloggerApi.Src.Helpers;
-using AsaBloggerApi.Src.Logics;
-using AsaBloggerApi.Src.Models.DTO;
 using AsaBloggerApi.Src.Utils;
-using Microsoft.AspNetCore.Http.HttpResults;
+using AsaBloggerApi.Src.Services;
+using AsaBloggerApi.Src.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AsaBloggerApi.Src.Controllers{
+namespace AsaBloggerApi.Src.Controllers
+{
 
-[ApiController]
-[Route("api/auth")]
-    public sealed class AuthController : ControllerBase{
-        private readonly AuthLogic _logic ;
-        public AuthController(){
-          
-            _logic = new AuthLogic();
+    [ApiController]
+    [Route("api/auth")]
+    public sealed class AuthController : ControllerBase
+    {
+        private readonly IAuthService _service;
+        public AuthController(IAuthService service)
+        {
+
+            _service = service;
         }
 
         [HttpPost]
@@ -22,54 +23,59 @@ namespace AsaBloggerApi.Src.Controllers{
         {
             try
             {
-             
-                if(!CommonUtils.AllStringPropertyValuesAreNonEmpty(input)){
-                    return BadRequest(ApiHelper.BadPatameters());
-                }
-                var result =await _logic.Signup(input);
 
-                return Ok(ApiHelper.SendResponse(result));
+                if (!CommonUtils.AllStringPropertyValuesAreNonEmpty(input))
+                {
+                    return BadRequest(ApiUtils.BadPatameters());
+                }
+                var result = await _service.Signup(input);
+
+                return Ok(ApiUtils.SendResponse(result));
 
             }
             catch (Exception ex)
             {
-                return BadRequest(ApiHelper.SendError(error:ex.ToString()));
+                return BadRequest(ApiUtils.SendError(error: ex.ToString()));
             }
         }
+        [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO input)
         {
             try
             {
-                 if(!CommonUtils.AllStringPropertyValuesAreNonEmpty(input)){
-                    return BadRequest(ApiHelper.BadPatameters());
+                if (!CommonUtils.AllStringPropertyValuesAreNonEmpty(input))
+                {
+                    return BadRequest(ApiUtils.BadPatameters());
                 }
-                 var result =await _logic.Login(input);
+                var result = await _service.Login(input);
 
-                return Ok(ApiHelper.SendResponse(result));
+                return Ok(ApiUtils.SendResponse(result));
 
             }
             catch (Exception ex)
             {
-                return BadRequest(ApiHelper.SendError(error:ex.ToString()));
+                return BadRequest(ApiUtils.SendError(error: ex.ToString()));
             }
         }
-          [Route("checkToken")]
+        [HttpPost]
+        [Route("checkToken")]
         public async Task<IActionResult> CheckToken([FromBody] CheckTokenDTO input)
         {
             try
             {
-                 if(!CommonUtils.AllStringPropertyValuesAreNonEmpty(input)){
-                    return BadRequest(ApiHelper.BadPatameters());
+                if (!CommonUtils.AllStringPropertyValuesAreNonEmpty(input))
+                {
+                    return BadRequest(ApiUtils.BadPatameters());
                 }
-                  var result =await _logic.CheckToken(input);
+                var result = await _service.CheckToken(input);
 
-                return Ok(ApiHelper.SendResponse(result));
+                return Ok(ApiUtils.SendResponse(result));
 
             }
             catch (Exception ex)
             {
-                return BadRequest(ApiHelper.SendError(error:ex.ToString()));
+                return BadRequest(ApiUtils.SendError(error: ex.ToString()));
             }
         }
 
