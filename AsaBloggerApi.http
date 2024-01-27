@@ -1,0 +1,6 @@
+@AsaBloggerApi_HostAddress = http://localhost:5207
+
+GET {{AsaBloggerApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
