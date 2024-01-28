@@ -14,10 +14,12 @@ namespace AsaBloggerApi.Src.Controllers
     public class BlogController : ControllerBase
     {
         private readonly IBlogService _service;
+        private readonly HttpContext _context;
         public BlogController(IBlogService service)
         {
 
             _service = service;
+            _context=HttpContext;
         }
 
         [HttpPost]
@@ -25,9 +27,8 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("createblog")]
         public async Task<IActionResult> CreateBlog([FromBody] CreateBlogDTO input)
         {
-            var context = HttpContext;
-            var userModel = (UserModel)context.Items["User"];
-            if (userModel.Id != int.Parse(input.UserId))
+            var userModel = (UserModel)_context.Items["User"];
+            if (userModel==null||userModel.Id != int.Parse(input.UserId))
             {
                 return BadRequest(ApiUtils.AccessDenied());
             }
@@ -46,9 +47,8 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("createcomment")]
         public async Task<IActionResult> CreateComment([FromBody] CreateCommentDTO input)
         {   
-            var context = HttpContext;
-            var userModel = (UserModel)context.Items["User"];
-            if (userModel.Id != int.Parse(input.UserId))
+            var userModel = (UserModel)_context.Items["User"];
+            if (userModel==null||userModel.Id != int.Parse(input.UserId))
             {
                 return BadRequest(ApiUtils.AccessDenied());
             }
@@ -121,9 +121,8 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("editblog")]
         public async Task<IActionResult> EditBlog([FromBody] EditBlogDTO input)
         {
-             var context = HttpContext;
-            var userModel = (UserModel)context.Items["User"];
-            if (userModel.Id != int.Parse(input.UserId))
+            var userModel = (UserModel)_context.Items["User"];
+            if (userModel==null||userModel.Id != int.Parse(input.UserId))
             {
                 return BadRequest(ApiUtils.AccessDenied());
             }
@@ -143,7 +142,7 @@ namespace AsaBloggerApi.Src.Controllers
         {
             var context = HttpContext;
             var userModel = (UserModel)context.Items["User"];
-            if (userModel.Id != int.Parse(input.UserId))
+            if (userModel==null||userModel.Id != int.Parse(input.UserId))
             {
                 return BadRequest(ApiUtils.AccessDenied());
             }
