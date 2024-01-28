@@ -1,5 +1,5 @@
 using AsaBloggerApi.Src.Helpers;
-using AsaBloggerApi.Src.Infostructure.Interfaces;
+using AsaBloggerApi.Src.Inftastructure.Interfaces;
 using AsaBloggerApi.Src.Models;
 
 namespace AsaBloggerApi.Src.Middlewares
@@ -13,17 +13,17 @@ namespace AsaBloggerApi.Src.Middlewares
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, IRepository repository)
+        public async Task Invoke(HttpContext context)
         {
-            var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-            var userId = JwtUtils.ValidateToken(token,Config.GetConfig());
+            var token = context.Request.Headers.Authorization.FirstOrDefault()?.Split(" ").Last();
+            var userId = JwtUtils.ValidateToken(token, Config.GetConfig());
+
             if (userId != null)
             {
-                
-                context.Items["User"] = await repository.GetUserById(new UserModel(){
-                    Id=(int)userId
-                });
+
+                context.Items["User"] = userId;
             }
+
 
             await _next(context);
         }

@@ -1,6 +1,6 @@
 using AsaBloggerApi.Src.Models;
 
-namespace AsaBloggerApi.Src.Infostructure.Interfaces
+namespace AsaBloggerApi.Src.Inftastructure.Interfaces
 {
     public interface IRepository
     {

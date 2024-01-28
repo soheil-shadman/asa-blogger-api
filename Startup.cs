@@ -1,6 +1,6 @@
 using System.Text;
-using AsaBloggerApi.Src.Infostructure;
-using AsaBloggerApi.Src.Infostructure.Interfaces;
+using AsaBloggerApi.Src.Inftastructure;
+using AsaBloggerApi.Src.Inftastructure.Interfaces;
 using AsaBloggerApi.Src.Middlewares;
 using AsaBloggerApi.Src.Services;
 using AsaBloggerApi.Src.Services.Interfaces;
@@ -27,7 +27,7 @@ public class Startup
         services.AddDbContext<EFDataContext>(o => o.UseNpgsql(configRoot.GetConnectionString("BLOG_DB")));
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IBlogService, BlogService>();
-        services.AddTransient<IRepository, Repository>();
+        services.AddScoped<IRepository, Repository>();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                     {
 

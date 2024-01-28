@@ -14,12 +14,10 @@ namespace AsaBloggerApi.Src.Controllers
     public class BlogController : ControllerBase
     {
         private readonly IBlogService _service;
-        private readonly HttpContext _context;
         public BlogController(IBlogService service)
         {
 
             _service = service;
-            _context=HttpContext;
         }
 
         [HttpPost]
@@ -27,8 +25,8 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("createblog")]
         public async Task<IActionResult> CreateBlog([FromBody] CreateBlogDTO input)
         {
-            var userModel = (UserModel)_context.Items["User"];
-            if (userModel==null||userModel.Id != int.Parse(input.UserId))
+            var userId = HttpContext.Items["User"];;
+            if (userId == null || userId.ToString() != input.UserId)
             {
                 return BadRequest(ApiUtils.AccessDenied());
             }
@@ -46,9 +44,9 @@ namespace AsaBloggerApi.Src.Controllers
         [Authorize]
         [Route("createcomment")]
         public async Task<IActionResult> CreateComment([FromBody] CreateCommentDTO input)
-        {   
-            var userModel = (UserModel)_context.Items["User"];
-            if (userModel==null||userModel.Id != int.Parse(input.UserId))
+        {
+            var userId = HttpContext.Items["User"];
+            if (userId == null || userId.ToString() != input.UserId)
             {
                 return BadRequest(ApiUtils.AccessDenied());
             }
@@ -121,8 +119,8 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("editblog")]
         public async Task<IActionResult> EditBlog([FromBody] EditBlogDTO input)
         {
-            var userModel = (UserModel)_context.Items["User"];
-            if (userModel==null||userModel.Id != int.Parse(input.UserId))
+            var userId = HttpContext.Items["User"];
+            if (userId == null || userId.ToString() != input.UserId)
             {
                 return BadRequest(ApiUtils.AccessDenied());
             }
@@ -140,9 +138,8 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("editcomment")]
         public async Task<IActionResult> EditComment([FromBody] EditCommentDTO input)
         {
-            var context = HttpContext;
-            var userModel = (UserModel)context.Items["User"];
-            if (userModel==null||userModel.Id != int.Parse(input.UserId))
+            var userId = HttpContext.Items["User"];
+            if (userId == null || userId.ToString() != input.UserId)
             {
                 return BadRequest(ApiUtils.AccessDenied());
             }

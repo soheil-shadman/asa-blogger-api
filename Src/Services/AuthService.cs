@@ -1,5 +1,5 @@
 using AsaBloggerApi.Src.Helpers;
-using AsaBloggerApi.Src.Infostructure.Interfaces;
+using AsaBloggerApi.Src.Inftastructure.Interfaces;
 using AsaBloggerApi.Src.Models;
 using AsaBloggerApi.Src.Models.DTO;
 using AsaBloggerApi.Src.Services.Interfaces;

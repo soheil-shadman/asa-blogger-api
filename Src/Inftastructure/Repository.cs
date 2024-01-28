@@ -1,9 +1,9 @@
 using AsaBloggerApi.Src.Domain.Entities;
-using AsaBloggerApi.Src.Infostructure.Interfaces;
+using AsaBloggerApi.Src.Inftastructure.Interfaces;
 using AsaBloggerApi.Src.Models;
 
 using Microsoft.EntityFrameworkCore;
-namespace AsaBloggerApi.Src.Infostructure
+namespace AsaBloggerApi.Src.Inftastructure
 {
     public class Repository : IRepository
     {
