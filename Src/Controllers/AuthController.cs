@@ -55,6 +55,7 @@ namespace AsaBloggerApi.Src.Controllers
             {
                 return BadRequest(ApiUtils.BadPatameters());
             }
+
             var result = await _service.CheckToken(input);
 
             return Ok(ApiUtils.SendResponse(result));

@@ -1,4 +1,5 @@
 
+using AsaBloggerApi.Src.Models;
 using AsaBloggerApi.Src.Models.DTO;
 using AsaBloggerApi.Src.Services.Interfaces;
 using AsaBloggerApi.Src.Utils;
@@ -24,6 +25,12 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("createblog")]
         public async Task<IActionResult> CreateBlog([FromBody] CreateBlogDTO input)
         {
+            var context = HttpContext;
+            var userModel = (UserModel)context.Items["User"];
+            if (userModel.Id != int.Parse(input.UserId))
+            {
+                return BadRequest(ApiUtils.AccessDenied());
+            }
 
             if (!input.IsValid())
             {
@@ -38,7 +45,13 @@ namespace AsaBloggerApi.Src.Controllers
         [Authorize]
         [Route("createcomment")]
         public async Task<IActionResult> CreateComment([FromBody] CreateCommentDTO input)
-        {
+        {   
+            var context = HttpContext;
+            var userModel = (UserModel)context.Items["User"];
+            if (userModel.Id != int.Parse(input.UserId))
+            {
+                return BadRequest(ApiUtils.AccessDenied());
+            }
 
             if (!input.IsValid())
             {
@@ -108,7 +121,12 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("editblog")]
         public async Task<IActionResult> EditBlog([FromBody] EditBlogDTO input)
         {
-
+             var context = HttpContext;
+            var userModel = (UserModel)context.Items["User"];
+            if (userModel.Id != int.Parse(input.UserId))
+            {
+                return BadRequest(ApiUtils.AccessDenied());
+            }
             if (!input.IsValid())
             {
                 return BadRequest(ApiUtils.BadPatameters());
@@ -123,6 +141,12 @@ namespace AsaBloggerApi.Src.Controllers
         [Route("editcomment")]
         public async Task<IActionResult> EditComment([FromBody] EditCommentDTO input)
         {
+            var context = HttpContext;
+            var userModel = (UserModel)context.Items["User"];
+            if (userModel.Id != int.Parse(input.UserId))
+            {
+                return BadRequest(ApiUtils.AccessDenied());
+            }
 
             if (!input.IsValid())
             {

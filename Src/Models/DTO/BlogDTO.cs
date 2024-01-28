@@ -38,18 +38,18 @@ namespace AsaBloggerApi.Src.Models.DTO
       return !string.IsNullOrEmpty(UserId) && !string.IsNullOrEmpty(BlogId) && !string.IsNullOrEmpty(Content);
     }
   }
-  public record EditBlogDTO(string Content,string Id)
+  public record EditBlogDTO(string Content,string Id,string UserId)
   {
     public bool IsValid()
     {
-      return !string.IsNullOrEmpty(Content)&&!string.IsNullOrEmpty(Id);
+      return !string.IsNullOrEmpty(Content)&&!string.IsNullOrEmpty(Id)&&!string.IsNullOrEmpty(UserId);
     }
   }
-  public record EditCommentDTO(string Content,string Id)
+  public record EditCommentDTO(string Content,string Id,string UserId)
   {
     public bool IsValid()
     {
-      return !string.IsNullOrEmpty(Content)&&!string.IsNullOrEmpty(Id);
+      return !string.IsNullOrEmpty(Content)&&!string.IsNullOrEmpty(Id)&&!string.IsNullOrEmpty(UserId);
     }
   }
 }

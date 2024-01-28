@@ -20,7 +20,7 @@ namespace AsaBloggerApi.Src.Middlewares
             if (userId != null)
             {
                 
-                context.Items["User"] = repository.GetUserById(new UserModel(){
+                context.Items["User"] = await repository.GetUserById(new UserModel(){
                     Id=(int)userId
                 });
             }

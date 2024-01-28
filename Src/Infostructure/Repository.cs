@@ -257,7 +257,14 @@ namespace AsaBloggerApi.Src.Infostructure
             query.UpdateAt = DateTime.Now;
             _context.Update(query);
             await _context.SaveChangesAsync();
-            return blogModel;
+            return new BlogModel()
+            {
+                Id = query.Id,
+                Content = query.Content,
+                ImageURL = query.ImageURL,
+                PublishedDate = query.PublishedDate,
+                UserId = query.UserId
+            };
         }
 
 
@@ -272,7 +279,14 @@ namespace AsaBloggerApi.Src.Infostructure
             query.UpdateAt = DateTime.Now;
             _context.Update(query);
             await _context.SaveChangesAsync();
-            return commentModel;
+            return new CommentModel()
+            {
+                Id = query.Id,
+                Content = query.Content,
+                BlogId = query.BlogId,
+                UserId = query.UserId,
+                PublishedDate = query.PublishedDate,
+            };
         }
     }
 
