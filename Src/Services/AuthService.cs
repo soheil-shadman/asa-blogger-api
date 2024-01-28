@@ -1,7 +1,7 @@
 using AsaBloggerApi.Src.Helpers;
+using AsaBloggerApi.Src.Infostructure.Interfaces;
 using AsaBloggerApi.Src.Models;
 using AsaBloggerApi.Src.Models.DTO;
-using AsaBloggerApi.Src.Repositories;
 using AsaBloggerApi.Src.Services.Interfaces;
 namespace AsaBloggerApi.Src.Services
 {
@@ -47,13 +47,13 @@ namespace AsaBloggerApi.Src.Services
 
             var result =JwtUtils.ValidateToken(input.Token,Config.GetConfig());
 
-            if (!result){
+            if (result==null){
                  throw new Exception("invalid token");
             }
             var userModel= new UserModel{
-            Token=input.Token
+            Id= (int)result
             };
-            userModel = await _repository.GetUserByToken(userModel);
+            userModel = await _repository.GetUserById(userModel);
             if(userModel==null){
                 throw new Exception("user not found");
             }

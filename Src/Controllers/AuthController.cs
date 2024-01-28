@@ -47,7 +47,7 @@ namespace AsaBloggerApi.Src.Controllers
 
         }
         [HttpPost]
-        [Route("checkToken")]
+        [Route("checktoken")]
         public async Task<IActionResult> CheckToken([FromBody] CheckTokenDTO input)
         {
 

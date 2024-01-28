@@ -1,7 +1,7 @@
 using System.Text;
 using AsaBloggerApi.Src.Infostructure;
+using AsaBloggerApi.Src.Infostructure.Interfaces;
 using AsaBloggerApi.Src.Middlewares;
-using AsaBloggerApi.Src.Repositories;
 using AsaBloggerApi.Src.Services;
 using AsaBloggerApi.Src.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -37,7 +37,7 @@ public class Startup
                             ValidateIssuerSigningKey = true,
                             ValidIssuer = configRoot["Jwt:Issuer"],
                             ValidAudience = configRoot["Jwt:Issuer"],
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configRoot["Jwt:Issuer"]))
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configRoot["Jwt:key"]))
                         };
 
                     });
@@ -55,6 +55,7 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.UseMiddleware<CatchMiddleware>();
+        app.UseMiddleware<AuthMiddleWare>();
         app.MapControllers();
         app.MapGet("/", () => "Asa blogger!");
 

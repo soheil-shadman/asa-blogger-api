@@ -33,7 +33,7 @@ namespace AsaBloggerApi.Src.Helpers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-        public static bool ValidateToken(string token, Config config)
+        public static int? ValidateToken(string token, Config config)
         {
             try
             {
@@ -51,14 +51,12 @@ namespace AsaBloggerApi.Src.Helpers
                 IdentityModelEventSource.ShowPII = true;
                 tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
                 var jwtToken = (JwtSecurityToken)validatedToken;
-                return true;
+                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "Id").Value);
+                return userId;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("====================");
-                Console.WriteLine(ex.ToString());
-                Console.WriteLine("====================");
-                return false;
+                return null;
             }
 
         }
